@@ -24,25 +24,33 @@
       "ami_name": "{{user `ami_name_prefix`}} {{isotime \"2006-01-02 15-04-05\"}}",
       "ssh_keypair_name": "jared-laptop",
       "ssh_private_key_file": "/home/jared/.ssh/id_rsa"
+    },
+    {
+      "type": "docker",
+      "image": "augury-image-base:latest",
+      "pull": false,
+      "discard": false,
+      "commit": true
     }
   ],
   "provisioners": [
     {
       "type": "file",
       "source": "keys/id_rsa",
-      "destination": ".ssh/id_rsa"
+      "destination": "/home/ubuntu/.ssh/id_rsa"
     },
     {
       "type": "file",
       "source": "keys/id_rsa.pub",
-      "destination": ".ssh/id_rsa.pub"
+      "destination": "/home/ubuntu/.ssh/id_rsa.pub"
     },
     {
       "type": "shell",
       "scripts": [
         "scripts/install_deps.sh",
         "scripts/build_wrf.sh",
-        "scripts/add_augury.sh"
+        "scripts/add_augury.sh",
+        "scripts/setup_logging.sh"
       ]
     }
   ]

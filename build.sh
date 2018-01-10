@@ -11,4 +11,4 @@ region=$1
 
 echo "Running build."
 mkdir -p logs
-packer build -var-file secrets.json -var-file $region template.json > >(tee logs/stdout.log) 2> >(tee logs/stderr.log >&2)
+packer build -var-file secrets.json -var-file $region --only amazon-ebs template.json > >(tee logs/stdout-ebs.log) 2> >(tee logs/stderr-ebs.log >&2)

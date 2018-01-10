@@ -18,7 +18,7 @@ LIBPNG_VERSION=1.6.28
 JASPER_VERSION=1.900.1
 
 sudo apt-get update && sudo apt-get -y upgrade
-sudo apt-get install -y build-essential gfortran m4 csh git jq
+sudo apt-get install -y build-essential gfortran m4 csh git jq wget
 
 sudo chown root:ubuntu /opt && sudo chmod g+w /opt
 mkdir -p $DIR
