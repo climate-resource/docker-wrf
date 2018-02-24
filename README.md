@@ -19,6 +19,8 @@ There are a number of secrets that are needed to build the application, especial
 
 * keys - The SSH key that is used to access the source control containing the scripts
 * secrets.json - Variables used in the templates
+    * aws_secret_key_id
+    * aws_secret_access_key
     
     
 ### Local development

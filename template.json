@@ -6,12 +6,12 @@
     "aws_region": "",
     "aws_source_ami": "",
     "aws_vpc_id": "",
-    "aws_subnet_id": ""
+    "aws_subnet_id": "",
+    "aws_ssh_private_key": ""
   },
   "builders": [
     {
       "type": "amazon-ebs",
-      "name": "{{user `aws_region`}}",
       "instance_type": "c4.2xlarge",
       "ssh_username": "ubuntu",
       "associate_public_ip_address": true,
@@ -23,7 +23,7 @@
       "subnet_id": "{{user `aws_subnet_id`}}",
       "ami_name": "{{user `ami_name_prefix`}} {{isotime \"2006-01-02 15-04-05\"}}",
       "ssh_keypair_name": "jared-laptop",
-      "ssh_private_key_file": "/home/jared/.ssh/id_rsa"
+      "ssh_private_key_file": "{{user `aws_ssh_private_key`}}"
     },
     {
       "type": "docker",
