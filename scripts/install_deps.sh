@@ -5,14 +5,14 @@ set -e
 
 # Set up the required ENV variables
 # The current configuration uses GNU compilers
-DIR=/opt/wrf/libs
-CC=gcc
-CXX=g++
-FC=gfortran
-FCFLAGS=-m64
-F77=gfortran
-FFLAGS=-m64
-NC_VERSION=4.1.3
+export DIR=/opt/wrf/libs
+export CC=gcc
+export CXX=g++
+export FC=gfortran
+export FCFLAGS=-m64
+export F77=gfortran
+export FFLAGS=-m64
+export NC_VERSION=4.1.3
 MPICH_VERSION=3.2
 ZLIB_VERSION=1.2.11
 LIBPNG_VERSION=1.6.34
@@ -40,15 +40,15 @@ wget -nv ftp://ftp-osl.osuosl.org/pub/libpng/src/libpng16/libpng-$LIBPNG_VERSION
 wget -nv http://www2.mmm.ucar.edu/wrf/OnLineTutorial/compile_tutorial/tar_files/jasper-$JASPER_VERSION.tar.gz
 
 # Download and install netCDF
-wget
+wget https://www.unidata.ucar.edu/downloads/netcdf/ftp/netcdf-$NC_VERSION.tar.gz
 tar xzvf netcdf-$NC_VERSION.tar.gz
 pushd netcdf-$NC_VERSION
 ./configure --prefix=$DIR/netcdf --disable-dap \
      --disable-netcdf-4 --disable-shared
 make -j 8
 make install
-PATH=$DIR/netcdf/bin:$PATH
-NETCDF=$DIR/netcdf
+export PATH=$DIR/netcdf/bin:$PATH
+export NETCDF=$DIR/netcdf
 popd
 
 # Install MPICH
@@ -61,8 +61,8 @@ PATH=$DIR/mpich/bin:$PATH
 popd
 
 # Install zlib
-LDFLAGS=-L$DIR/grib2/lib
-CPPFLAGS=-I$DIR/grib2/include
+export LDFLAGS=-L$DIR/grib2/lib
+export CPPFLAGS=-I$DIR/grib2/include
 
 tar xzvf zlib-$ZLIB_VERSION.tar.gz
 pushd zlib-$ZLIB_VERSION
