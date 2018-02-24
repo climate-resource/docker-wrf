@@ -27,6 +27,11 @@ sudo python get-pip.py
 rm get-pip.py
 sudo pip install wrfconf
 
+# Install yq for parsing yaml files
+wget -nv https://github.com/mikefarah/yq/releases/download/1.14.0/yq_linux_amd64
+chmod +x yq_linux_amd64
+sudo mv yq_linux_amd64 /usr/bin/yq
+
 sudo chown root:ubuntu /opt && sudo chmod g+w /opt
 mkdir -p $DIR
 pushd $DIR
