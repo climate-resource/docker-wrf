@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -x
+set -e
 
 # Set up the required ENV variables
 # The current configuration uses GNU compilers
@@ -14,11 +15,17 @@ FFLAGS=-m64
 NC_VERSION=4.1.3
 MPICH_VERSION=3.2
 ZLIB_VERSION=1.2.11
-LIBPNG_VERSION=1.6.28
+LIBPNG_VERSION=1.6.34
 JASPER_VERSION=1.900.1
 
 sudo apt-get update && sudo apt-get -y upgrade
-sudo apt-get install -y build-essential gfortran m4 csh git jq wget
+sudo apt-get install -y build-essential gfortran m4 csh git jq wget python
+
+# Install pip and wrfconf
+wget https://bootstrap.pypa.io/get-pip.py
+sudo python get-pip.py
+rm get-pip.py
+sudo pip install wrfconf
 
 sudo chown root:ubuntu /opt && sudo chmod g+w /opt
 mkdir -p $DIR
@@ -29,7 +36,7 @@ pushd $DIR
 wget -nv http://www2.mmm.ucar.edu/wrf/OnLineTutorial/compile_tutorial/tar_files/netcdf-$NC_VERSION.tar.gz
 wget -nv http://www.mpich.org/static/downloads/$MPICH_VERSION/mpich-$MPICH_VERSION.tar.gz
 wget -nv http://www.zlib.net/zlib-$ZLIB_VERSION.tar.gz
-wget -nv http://download.sourceforge.net/libpng/libpng-$LIBPNG_VERSION.tar.gz
+wget -nv ftp://ftp-osl.osuosl.org/pub/libpng/src/libpng16/libpng-$LIBPNG_VERSION.tar.gz
 wget -nv http://www2.mmm.ucar.edu/wrf/OnLineTutorial/compile_tutorial/tar_files/jasper-$JASPER_VERSION.tar.gz
 
 # Download and install netCDF
