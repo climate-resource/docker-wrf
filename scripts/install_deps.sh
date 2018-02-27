@@ -92,3 +92,8 @@ make -j 8
 make install
 popd
 
+# Install NCL
+wget https://www.earthsystemgrid.org/dataset/ncl.640.dap/file/ncl_ncarg-6.4.0-Debian8.6_64bit_gnu492.tar.gz
+sudo mkdir /usr/local/ncl-6.4.0
+sudo tar -zxf ncl_ncarg-6.4.0-Debian8.6_64bit_gnu492.tar.gz -C /usr/local/ncl-6.4.0
+rm ncl_ncarg-6.4.0-Debian8.6_64bit_gnu492.tar.gz
