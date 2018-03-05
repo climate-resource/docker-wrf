@@ -2,12 +2,13 @@
   "variables": {
     "aws_access_key_id": "",
     "aws_secret_access_key": "",
-    "ami_name_prefix": "wrf-standalone",
     "aws_region": "",
     "aws_source_ami": "",
     "aws_vpc_id": "",
     "aws_subnet_id": "",
-    "aws_ssh_private_key": ""
+    "aws_ssh_private_key": "",
+    "git_sha": "none",
+    "name_prefix": "wrf-standalone"
   },
   "builders": [
     {
@@ -21,7 +22,7 @@
       "source_ami": "{{user `aws_source_ami`}}",
       "vpc_id": "{{user `aws_vpc_id`}}",
       "subnet_id": "{{user `aws_subnet_id`}}",
-      "ami_name": "{{user `ami_name_prefix`}} {{isotime \"2006-01-02 15-04-05\"}}",
+      "ami_name": "{{user `name_prefix`}}-{{user `git_sha`}}",
       "ssh_keypair_name": "jared-laptop",
       "ssh_private_key_file": "{{user `aws_ssh_private_key`}}"
     },
@@ -53,5 +54,19 @@
         "scripts/setup_logging.sh"
       ]
     }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "docker-tag",
+        "repository": "augury/{{user `name_prefix`}}",
+        "tag": "{{user `git_sha`}}"
+      },
+      {
+        "type": "docker-tag",
+        "repository": "augury/{{user `name_prefix`}}",
+        "tag": "latest"
+      }
+    ]
   ]
 }
