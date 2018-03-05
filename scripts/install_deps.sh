@@ -19,7 +19,7 @@ LIBPNG_VERSION=1.6.34
 JASPER_VERSION=1.900.1
 
 sudo apt-get update && sudo apt-get -y upgrade
-sudo apt-get install -y build-essential gfortran m4 csh git jq wget python
+sudo apt-get install -y build-essential gfortran m4 csh git jq wget python aria2
 
 # Install pip and wrfconf
 wget https://bootstrap.pypa.io/get-pip.py
