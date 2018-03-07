@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 set -e
 
 if [ "$#" -ne 0 ]; then
@@ -9,6 +9,11 @@ fi
 echo "Building the latest version of the docker image"
 docker build . -t augury-image-base:latest
 
+if [ -z "$CI_COMMIT_SHA" ]; then
+    GIT_SHA=${CI_COMMIT_SHA}
+else
+    GIT_SHA=`git rev-parse --short HEAD`
+
 echo "Running build."
 mkdir -p logs
-packer build -var-file secrets-local.json -var "git_sha=`git rev-parse --short HEAD`" --only docker template-docker.json > >(tee logs/stdout-local.log) 2> >(tee logs/stderr-local.log >&2)
+packer build -var "git_sha=$GIT_SHA" --only docker template-docker.json > >(tee logs/stdout-local.log) 2> >(tee logs/stderr-local.log >&2)
