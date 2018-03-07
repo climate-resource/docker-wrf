@@ -26,6 +26,7 @@ wget https://bootstrap.pypa.io/get-pip.py
 sudo python get-pip.py
 rm get-pip.py
 sudo pip install wrfconf
+sudo pip install git+http://github.com/lewisjared/augurycli.git#egg=augurycli
 
 # Install yq for parsing yaml files
 wget -nv https://github.com/mikefarah/yq/releases/download/1.14.0/yq_linux_amd64
