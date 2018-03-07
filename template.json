@@ -5,7 +5,6 @@
     "aws_region": "",
     "aws_source_ami": "",
     "aws_vpc_id": "",
-    "aws_subnet_id": "",
     "aws_ssh_private_key": "",
     "git_sha": "none",
     "name_prefix": "wrf-standalone"
@@ -13,7 +12,7 @@
   "builders": [
     {
       "type": "amazon-ebs",
-      "instance_type": "c5.xlarge",
+      "instance_type": "c5.2xlarge",
       "ena_support": true,
       "ssh_username": "ubuntu",
       "associate_public_ip_address": true,
@@ -30,7 +29,6 @@
           "most_recent": true
         },
       "vpc_id": "{{user `aws_vpc_id`}}",
-      "subnet_id": "{{user `aws_subnet_id`}}",
       "ami_name": "{{user `name_prefix`}}-{{user `git_sha`}}",
       "ssh_keypair_name": "jared-laptop",
       "ssh_private_key_file": "{{user `aws_ssh_private_key`}}"
