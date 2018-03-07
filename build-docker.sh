@@ -9,7 +9,7 @@ fi
 echo "Building the latest version of the docker image"
 docker build . -t augury-image-base:latest
 
-if [ -v $CI_COMMIT_SHA ]; then
+if [ -v CI_COMMIT_SHA ]; then
     GIT_SHA=${CI_COMMIT_SHA}
 else
     GIT_SHA=`git rev-parse --short HEAD`
