@@ -1,8 +1,13 @@
-image:
-  name: hashicorp/packer:1.0.4
-  entrypoint:
-    - '/usr/bin/env'
-    - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+image: docker:latest
+
+# When using dind, it's wise to use the overlayfs driver for
+# improved performance.
+variables:
+  DOCKER_DRIVER: overlay2
+
+services:
+- docker:dind
+- hashicorp/packer:1.0.4
 
 before_script:
   - packer --version
