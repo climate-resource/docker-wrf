@@ -19,6 +19,7 @@ stages:
 build:
   stage: deploy
   script:
+    - ls -al
     - ./build-docker.sh
     - find ./region -maxdepth 1 -name '*.json' -exec ./build.sh {} \;
   when: manual
