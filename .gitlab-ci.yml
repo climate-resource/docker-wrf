@@ -9,8 +9,8 @@ services:
 - docker:dind
 
 before_script:
-  - apk-install --update curl
-  - curl https://releases.hashicorp.com/packer/1.2.1/packer_1.2.1_linux_amd64.zip & unzip packer_1.2.1_linux_amd64.zip & cp packer /usr/bin/packer
+  - apk add --no-cache curl
+  - curl https://releases.hashicorp.com/packer/1.2.1/packer_1.2.1_linux_amd64.zip > packer_1.2.1_linux_amd64.zip && unzip packer_1.2.1_linux_amd64.zip && mv packer /usr/bin/packer
   - packer --version
 
 stages:
