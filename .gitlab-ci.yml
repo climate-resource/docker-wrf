@@ -9,19 +9,22 @@ services:
 - docker:dind
 
 before_script:
-  - apk add --no-cache curl
+  - apk add --no-cache curl bash
   - curl https://releases.hashicorp.com/packer/1.2.1/packer_1.2.1_linux_amd64.zip > packer_1.2.1_linux_amd64.zip && unzip packer_1.2.1_linux_amd64.zip && mv packer /usr/bin/packer
   - packer --version
 
 stages:
-  - deploy
+  - build
 
-build:
-  stage: deploy
+build_docker:
+  stage: build
   script:
-    - ls -al
-    - ./build-docker.sh
-    - find ./region -maxdepth 1 -name '*.json' -exec ./build.sh {} \;
+    - bash build-docker.sh
+
+build_ebs:
+  stage: build
+  script:
+    - find ./region -maxdepth 1 -name '*.json' -exec bash build.sh {} \;
   when: manual
   only:
     - master
