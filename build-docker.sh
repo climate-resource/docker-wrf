@@ -13,6 +13,7 @@ if [ -z "$CI_COMMIT_SHA" ]; then
     GIT_SHA=${CI_COMMIT_SHA}
 else
     GIT_SHA=`git rev-parse --short HEAD`
+fi
 
 echo "Running build."
 mkdir -p logs
