@@ -1,0 +1,20 @@
+image:
+  name: hashicorp/packer:1.0.4
+  entrypoint:
+    - '/usr/bin/env'
+    - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+
+before_script:
+  - packer --version
+
+stages:
+  - deploy
+
+build:
+  stage: deploy
+  script:
+    - ./build-docker.sh
+    - find ./region -maxdepth 1 -name '*.json' -exec ./build.sh {} \;
+  when: manual
+  only:
+    - master
