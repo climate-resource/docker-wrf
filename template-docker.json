@@ -1,0 +1,50 @@
+{
+  "variables": {
+    "git_sha": "none",
+    "name_prefix": "wrf-standalone"
+  },
+  "builders": [
+    {
+      "type": "docker",
+      "image": "augury-image-base:latest",
+      "pull": false,
+      "discard": false,
+      "commit": true
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "keys/id_rsa",
+      "destination": "/home/ubuntu/.ssh/id_rsa"
+    },
+    {
+      "type": "file",
+      "source": "keys/id_rsa.pub",
+      "destination": "/home/ubuntu/.ssh/id_rsa.pub"
+    },
+    {
+      "type": "shell",
+      "scripts": [
+        "scripts/install_deps.sh",
+        "scripts/build_wrf.sh",
+        "scripts/add_augury.sh",
+        "scripts/setup_logging.sh"
+      ]
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "docker-tag",
+        "repository": "augury/{{user `name_prefix`}}",
+        "tag": "{{user `git_sha`}}"
+      },
+      {
+        "type": "docker-tag",
+        "repository": "augury/{{user `name_prefix`}}",
+        "tag": "latest"
+      }
+    ]
+  ]
+}

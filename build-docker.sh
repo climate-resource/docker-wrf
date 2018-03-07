@@ -11,4 +11,4 @@ docker build . -t augury-image-base:latest
 
 echo "Running build."
 mkdir -p logs
-packer build -var-file secrets-local.json -var "git_sha=`git rev-parse --short HEAD`" --only docker template.json > >(tee logs/stdout-local.log) 2> >(tee logs/stderr-local.log >&2)
+packer build -var-file secrets-local.json -var "git_sha=`git rev-parse --short HEAD`" --only docker template-docker.json > >(tee logs/stdout-local.log) 2> >(tee logs/stderr-local.log >&2)
