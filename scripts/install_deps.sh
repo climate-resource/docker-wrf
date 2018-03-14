@@ -22,11 +22,14 @@ sudo apt-get update && sudo apt-get -y upgrade
 sudo apt-get install -y build-essential gfortran m4 csh git jq wget python aria2 imagemagick
 
 # Install pip and wrfconf
-wget https://bootstrap.pypa.io/get-pip.py
-sudo python get-pip.py
-rm get-pip.py
-sudo pip install wrfconf
-sudo pip install git+http://github.com/lewisjared/augurycli.git#egg=augurycli
+wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
+bash Miniconda2-latest-Linux-x86_64.sh -b -p $HOME/miniconda
+rm Miniconda2-latest-Linux-x86_64.sh
+export PATH="$HOME/miniconda/bin:$PATH"
+echo 'export PATH="$HOME/miniconda/bin:$PATH"' >> ~/.bashrc
+pip install wrfconf
+pip install git+http://github.com/lewisjared/augurycli.git#egg=augurycli
+conda install -c conda-forge -y wrf-python
 
 # Install yq for parsing yaml files
 wget -nv https://github.com/mikefarah/yq/releases/download/1.14.0/yq_linux_amd64
@@ -92,9 +95,3 @@ pushd jasper-$JASPER_VERSION
 make -j 8
 make install
 popd
-
-# Install NCL
-aria2c -x4 https://www.earthsystemgrid.org/dataset/ncl.640.dap/file/ncl_ncarg-6.4.0-Debian8.6_64bit_gnu492.tar.gz
-sudo mkdir /usr/local/ncl-6.4.0
-sudo tar -zxf ncl_ncarg-6.4.0-Debian8.6_64bit_gnu492.tar.gz -C /usr/local/ncl-6.4.0
-rm ncl_ncarg-6.4.0-Debian8.6_64bit_gnu492.tar.gz
