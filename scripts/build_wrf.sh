@@ -43,3 +43,5 @@ echo "1" | ./configure
 ./compile
 ls -ls *.exe
 popd
+
+rm *.tar.gz

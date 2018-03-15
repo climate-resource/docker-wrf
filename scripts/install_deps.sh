@@ -19,17 +19,16 @@ LIBPNG_VERSION=1.6.34
 JASPER_VERSION=1.900.1
 
 sudo apt-get update && sudo apt-get -y upgrade
-sudo apt-get install -y build-essential gfortran m4 csh git jq wget python aria2 imagemagick
+sudo apt-get install -y --no-install-recommends build-essential gfortran m4 csh git jq wget aria2 imagemagick pdftk
 
 # Install pip and wrfconf
 wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
 bash Miniconda2-latest-Linux-x86_64.sh -b -p $HOME/miniconda
 rm Miniconda2-latest-Linux-x86_64.sh
 export PATH="$HOME/miniconda/bin:$PATH"
-echo 'export PATH="$HOME/miniconda/bin:$PATH"' >> ~/.bashrc
 pip install wrfconf
 pip install git+http://github.com/lewisjared/augurycli.git#egg=augurycli
-conda install -c conda-forge -y wrf-python
+conda install -c conda-forge -y wrf-python matplotlib netCDF4 basemap
 
 # Install yq for parsing yaml files
 wget -nv https://github.com/mikefarah/yq/releases/download/1.14.0/yq_linux_amd64
@@ -95,3 +94,5 @@ pushd jasper-$JASPER_VERSION
 make -j 8
 make install
 popd
+
+rm *.tar.gz
