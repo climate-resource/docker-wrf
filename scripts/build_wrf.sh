@@ -44,4 +44,4 @@ echo "1" | ./configure
 ls -ls *.exe
 popd
 
-rm *.tar.gz
+rm *.TAR.gz
