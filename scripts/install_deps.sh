@@ -29,7 +29,7 @@ export PATH="$HOME/miniconda/bin:$PATH"
 pip install wrfconf
 pip install git+http://github.com/lewisjared/augurycli.git#egg=augurycli
 conda install -c conda-forge -y wrf-python matplotlib netCDF4 basemap basemap-data-hires
-conda clean --all
+conda clean --all -y
 
 # Ensure the plotting works without a display
 mkdir -p ~/.config/matplotlib

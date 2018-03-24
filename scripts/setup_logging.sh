@@ -1,8 +1,15 @@
 #!/usr/bin/env bash
 
-sudo apt-get install -y rsyslog
-sudo service rsyslog start
+ES_VERSION=6.2.3
 
-#curl -sLO https://github.com/logzio/logzio-shipper/raw/master/dist/logzio-rsyslog.tar.gz && tar xzf logzio-rsyslog.tar.gz && sudo rsyslog/install.sh -t file -a "EcuhvYttOGesRGgVyRynCRWgiDuUKjWx" -l "listener.logz.io" --filepath "/var/log/syslog" -tag "syslog"
+# Install filebeat
+curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-${ES_VERSION}-amd64.deb
+sudo dpkg -i filebeat-${ES_VERSION}-amd64.deb
+rm filebeat-${ES_VERSION}-amd64.deb
+
+# Install metricbeat
+curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-${ES_VERSION}-amd64.deb
+sudo dpkg -i metricbeat-${ES_VERSION}-amd64.deb
+rm metricbeat-${ES_VERSION}-amd64.deb
 
 echo "Logging successfully setup"

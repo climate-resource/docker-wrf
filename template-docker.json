@@ -31,6 +31,18 @@
         "scripts/add_augury.sh",
         "scripts/setup_logging.sh"
       ]
+    },
+    {
+      "type": "file",
+      "source": "config/wrfbeat.yml",
+      "destination": "/etc/filebeat/filebeat.yml"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "sudo chown root /etc/filebeat/filebeat.yml",
+        "sudo chmod go-w /etc/filebeat/filebeat.yml"
+      ]
     }
   ],
   "post-processors": [

@@ -1,0 +1,14 @@
+filebeat.prospectors:
+  - type: log
+    paths:
+      /opt/wrf/output/filebeat.log
+    json.keys_under_root: true
+    scan_frequency: 1
+
+processors:
+- add_cloud_metadata:
+- add_docker_metadata:
+
+output.logstash:
+  hosts: ["localhost:5044"]
+  index: wrflogs

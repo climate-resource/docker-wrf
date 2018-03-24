@@ -19,15 +19,17 @@
       "access_key": "{{user `aws_access_key_id`}}",
       "secret_key": "{{user `aws_secret_access_key`}}",
       "region": "{{user `aws_region`}}",
-        "source_ami_filter": {
-          "filters": {
-            "virtualization-type": "hvm",
-            "name": "ubuntu/images/*ubuntu-xenial-16.04-amd64-server-*",
-            "root-device-type": "ebs"
-          },
-          "owners": ["099720109477"],
-          "most_recent": true
+      "source_ami_filter": {
+        "filters": {
+          "virtualization-type": "hvm",
+          "name": "ubuntu/images/*ubuntu-xenial-16.04-amd64-server-*",
+          "root-device-type": "ebs"
         },
+        "owners": [
+          "099720109477"
+        ],
+        "most_recent": true
+      },
       "vpc_id": "{{user `aws_vpc_id`}}",
       "ami_name": "{{user `name_prefix`}}-{{user `git_sha`}}",
       "ssh_keypair_name": "jared-laptop",
@@ -52,6 +54,18 @@
         "scripts/build_wrf.sh",
         "scripts/add_augury.sh",
         "scripts/setup_logging.sh"
+      ]
+    },
+    {
+      "type": "file",
+      "source": "config/wrfbeat.yml",
+      "destination": "/etc/filebeat/filebeat.yml"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "sudo chown root /etc/filebeat/filebeat.yml",
+        "sudo chmod go-w /etc/filebeat/filebeat.yml"
       ]
     }
   ]
