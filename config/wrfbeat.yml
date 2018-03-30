@@ -7,7 +7,6 @@ filebeat.prospectors:
 
 processors:
 - add_cloud_metadata:
-- add_docker_metadata:
 
 output.logstash:
   hosts: ["localhost:5044"]
