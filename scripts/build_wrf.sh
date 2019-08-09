@@ -4,44 +4,53 @@
 set -x
 
 # Setup
-WRF_VERSION=3.8.1
+WRF_VERSION=4.1.2
+WPS_VERSION=4.1
 DIR=/opt/wrf/libs
 
 # Link to the compiled dependencies
-export PATH=$DIR/netcdf/bin:$DIR/mpich/bin:$PATH
-export LDFLAGS=-L$DIR/grib2/lib
-export CPPFLAGS=-I$DIR/grib2/include
+export PATH=$DIR/bin:$PATH
+export LDFLAGS=-L$DIR/lib
+export CPPFLAGS=-I$DIR/include
 export CC=gcc
 export CXX=g++
 export FC=gfortran
 export FCFLAGS=-m64
 export F77=gfortran
 export FFLAGS=-m64
-export NETCDF=$DIR/netcdf
-export JASPERLIB=$DIR/grib2/lib
-export JASPERINC=$DIR/grib2/include
+export NETCDF=$DIR
+export NETCDF4=1
+export HDF5=$DIR
+export JASPERLIB=$DIR/lib
+export JASPERINC=$DIR/include
+export J="-j 4"
 
 pushd $DIR/..
 
-# Download the source
-wget -nv http://www2.mmm.ucar.edu/wrf/src/WRFV${WRF_VERSION}.TAR.gz
-wget -nv http://www2.mmm.ucar.edu/wrf/src/WPSV${WRF_VERSION}.TAR.gz
-
 # Build WRF
-tar -xzvf WRFV${WRF_VERSION}.TAR.gz
-pushd WRFV3
-echo "34\n1\n" | ./configure
-./compile em_real -j8
-./compile em_real -j8 # Not sure why i need to do it twice, but I do..
-ls -ls *.exe
-popd
+if [ ! -f WRF-${WRF_VERSION}/run/real.exe ]; then
+  wget -nv https://github.com/wrf-model/WRF/archive/v${WRF_VERSION}.tar.gz -O WRF-v${WRF_VERSION}.tar.gz
+  tar -xzvf WRF-v${WRF_VERSION}.tar.gz
+  pushd WRF-${WRF_VERSION} || exit
+  echo "34\n1\n" | ./configure
+  ./compile em_real
+  ls -ls *.exe
+  popd
+  ln -s WRF-${WRF_VERSION} WRF
+fi
 
 # Build WPS
-tar -xzvf WPSV${WRF_VERSION}.TAR.gz
-pushd WPS
-echo "1" | ./configure
-./compile
-ls -ls *.exe
-popd
+if [ ! -f WPS-${WPS_VERSION}/wps.exe ]; then
+  wget -nv https://github.com/wrf-model/WPS/archive/v${WPS_VERSION}.tar.gz -O WPS-v${WPS_VERSION}.tar.gz
+  tar -xzvf WPS-v${WPS_VERSION}.tar.gz
 
-rm *.TAR.gz
+  pushd WPS-${WPS_VERSION} || exit
+  echo "1" | ./configure
+  ./compile
+  ls -ls *.exe
+  popd
+  ln -s WPS-${WPS_VERSION} WPS
+fi
+
+rm *.tar.gz
+

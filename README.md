@@ -32,4 +32,5 @@ includes some additional changes to make it similar to the base image used on AW
     
 This script also automatically builds the `augury-image-base` docker image when needed.
 
-The 
+These scripts can also be used to install wrf to the local machine by running the `install_deps.sh` and then `build_wrf.sh` scripts
+from the `scripts/` folder. Ensure that the /opt/wrf directory exists and you have permission to write to it.
