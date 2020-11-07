@@ -3,11 +3,12 @@
     "aws_access_key_id": "",
     "aws_secret_access_key": "",
     "aws_region": "",
-    "aws_source_ami": "",
     "aws_vpc_id": "",
-    "aws_ssh_private_key": "",
     "git_sha": "none",
-    "name_prefix": "wrf-standalone"
+    "name_prefix": "wrf-standalone",
+    "deploy_user":"",
+    "deploy_pass":"",
+    "ssh_keypass": "jared-laptop"
   },
   "builders": [
     {
@@ -22,7 +23,7 @@
       "source_ami_filter": {
         "filters": {
           "virtualization-type": "hvm",
-          "name": "ubuntu/images/*ubuntu-xenial-16.04-amd64-server-*",
+          "name": "ubuntu/images/*ubuntu-focal-20.04-amd64-server-*",
           "root-device-type": "ebs"
         },
         "owners": [
@@ -32,40 +33,21 @@
       },
       "vpc_id": "{{user `aws_vpc_id`}}",
       "ami_name": "{{user `name_prefix`}}-{{user `git_sha`}}",
-      "ssh_keypair_name": "jared-laptop",
-      "ssh_private_key_file": "{{user `aws_ssh_private_key`}}"
+      "ssh_keypair_name": "{{ user `ssh_keypair` }}",
+      "ssh_agent_auth": true
     }
   ],
   "provisioners": [
     {
-      "type": "file",
-      "source": "keys/id_rsa",
-      "destination": "/home/ubuntu/.ssh/id_rsa"
-    },
-    {
-      "type": "file",
-      "source": "keys/id_rsa.pub",
-      "destination": "/home/ubuntu/.ssh/id_rsa.pub"
-    },
-    {
       "type": "shell",
+      "environment_vars": [
+        "DEPLOY_USER={{user `deploy_user`}}",
+        "DEPLOY_PASS={{user `deploy_pass`}}"
+    ],
       "scripts": [
         "scripts/install_deps.sh",
         "scripts/build_wrf.sh",
-        "scripts/add_augury.sh",
-        "scripts/setup_logging.sh"
-      ]
-    },
-    {
-      "type": "file",
-      "source": "config/wrfbeat.yml",
-      "destination": "/etc/filebeat/filebeat.yml"
-    },
-    {
-      "type": "shell",
-      "inline": [
-        "sudo chown root /etc/filebeat/filebeat.yml",
-        "sudo chmod go-w /etc/filebeat/filebeat.yml"
+        "scripts/add_augury.sh"
       ]
     }
   ]

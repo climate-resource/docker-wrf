@@ -26,6 +26,9 @@ build_docker:
     - bash build-docker.sh
     - docker tag augury/wrf-standalone:latest $IMAGE_TAG
     - docker push $IMAGE_TAG
+  when: manual
+    only:
+    - master
 
 build_ebs:
   stage: build
