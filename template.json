@@ -6,8 +6,8 @@
     "aws_vpc_id": "",
     "git_sha": "none",
     "name_prefix": "wrf-standalone",
-    "deploy_user":"",
-    "deploy_pass":"",
+    "deploy_user": "",
+    "deploy_pass": "",
     "ssh_keypass": "jared-laptop"
   },
   "builders": [
@@ -40,10 +40,16 @@
   "provisioners": [
     {
       "type": "shell",
+      "inline": [
+        "/usr/bin/cloud-init status --wait"
+      ]
+    },
+    {
+      "type": "shell",
       "environment_vars": [
         "DEPLOY_USER={{user `deploy_user`}}",
         "DEPLOY_PASS={{user `deploy_pass`}}"
-    ],
+      ],
       "scripts": [
         "scripts/install_deps.sh",
         "scripts/build_wrf.sh",
