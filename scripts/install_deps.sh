@@ -3,6 +3,10 @@
 set -x
 set -e
 
+sudo apt update && sudo apt -y upgrade
+sudo apt install -y build-essential gfortran m4 csh git jq wget aria2 imagemagick curl
+
+
 # Set up the required ENV variables
 # The current configuration uses GNU compilers
 export DIR=/opt/wrf/libs
@@ -21,8 +25,6 @@ LIBCURL_VERSION=7.65.3
 JASPER_VERSION=1.900.1
 NUM_CORES=8
 
-sudo apt-get update && sudo apt-get -y upgrade
-sudo apt-get install -y build-essential gfortran m4 csh git jq wget aria2 imagemagick curl
 
 # Install pip and wrfconf
 #wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
@@ -46,7 +48,8 @@ if [ ! -f /usr/bin/yq ]; then
 fi
 
 #sudo chown root:ubuntu /opt && sudo chmod g+w /opt
-mkdir -p $DIR/src
+sudo mkdir -p $DIR/src
+sudo chown ubuntu:ubuntu -R /opt/wrf
 pushd $DIR/src
 
 export LDFLAGS=-L$DIR/lib
