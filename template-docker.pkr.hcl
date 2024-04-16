@@ -7,6 +7,16 @@ packer {
   }
 }
 
+variable "git_sha" {
+  type    = string
+  default = "none"
+}
+
+variable "name_prefix" {
+  type    = string
+  default = "wrf-standalone"
+}
+
 source "docker" "wrf-base" {
   commit  = true
   discard = false
@@ -26,12 +36,9 @@ build {
 
   post-processors {
     post-processor "docker-tag" {
-      repository = "wrf/${var.name_prefix}"
-      tag        = "${var.git_sha}"
-    }
-    post-processor "docker-tag" {
-      repository = "wrf/${var.name_prefix}"
-      tag        = "latest"
+
+      repository = "${var.name_prefix}"
+      tag        = ["${var.git_sha}", "latest"]
     }
   }
 }

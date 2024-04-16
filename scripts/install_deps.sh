@@ -19,7 +19,7 @@ export FFLAGS=-m64
 export NC_VERSION=4.7.0
 export NC_FORTRAN_VERSION=4.4.5
 MPICH_VERSION=3.2
-ZLIB_VERSION=1.2.11
+ZLIB_VERSION=1.3.1
 LIBPNG_VERSION=1.6.34
 LIBCURL_VERSION=7.65.3
 JASPER_VERSION=1.900.1
@@ -49,7 +49,7 @@ fi
 
 #sudo chown root:ubuntu /opt && sudo chmod g+w /opt
 sudo mkdir -p $DIR/src
-sudo chown ubuntu:ubuntu -R /opt/wrf
+#sudo chown ubuntu:ubuntu -R /opt/wrf
 pushd $DIR/src
 
 export LDFLAGS=-L$DIR/lib
