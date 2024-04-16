@@ -37,16 +37,6 @@ variable "deploy_user" {
   default = ""
 }
 
-variable "git_sha" {
-  type    = string
-  default = "none"
-}
-
-variable "name_prefix" {
-  type    = string
-  default = "wrf-standalone"
-}
-
 variable "ssh_keypair" {
   type = string
 }

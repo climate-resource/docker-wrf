@@ -16,8 +16,12 @@ Packer version 1.7.0 or later is required to support the new `pkr.hcl` format.
 ### Getting Started
 
 Once the secrets have been created, deploying a new image to EC2 is as simple as running:
-        
+    
+```
+    packer init.
     ./build.sh region/ap-southeast-2.json
+```
+
     
 This command deploys a new node for building the image, runs through the provider scripts in
 `scripts` and then bakes the output into a new AMI. 

@@ -15,4 +15,4 @@ packer build \
   -var-file secrets.json \
   -var-file $region \
   -var "git_sha=`git rev-parse --short HEAD`" \
-  --only amazon-ebs template.json > >(tee logs/stdout-ebs.log) 2> >(tee logs/stderr-ebs.log >&2)
+  --only amazon-ebs template.pkr.hcl > >(tee logs/stdout-ebs.log) 2> >(tee logs/stderr-ebs.log >&2)

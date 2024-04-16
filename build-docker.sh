@@ -17,4 +17,4 @@ fi
 
 echo "Running build."
 mkdir -p logs
-packer build -var "git_sha=$GIT_SHA" --only docker template-docker.json > >(tee logs/stdout-local.log) 2> >(tee logs/stderr-local.log >&2)
+packer build -var "git_sha=$GIT_SHA" --only docker template-docker.pkr.hcl > >(tee logs/stdout-local.log) 2> >(tee logs/stderr-local.log >&2)
