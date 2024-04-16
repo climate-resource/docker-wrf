@@ -1,6 +1,6 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
-MAINTAINER Jared Lewis <jared@jared.kiwi.nz>
+MAINTAINER Jared Lewis <jared.lewis@climate-resource.com>
 
 RUN apt-get update && apt-get install -y sudo curl && rm -rf /var/lib/apt/lists/*
 RUN echo "ubuntu ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers

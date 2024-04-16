@@ -2,13 +2,11 @@
   "variables": {
     "git_sha": "none",
     "name_prefix": "wrf-standalone",
-    "deploy_user": "",
-    "deploy_pass": ""
   },
   "builders": [
     {
       "type": "docker",
-      "image": "augury-image-base:latest",
+      "image": "wrf-image-base:latest",
       "pull": false,
       "discard": false,
       "commit": true
@@ -17,14 +15,9 @@
   "provisioners": [
     {
       "type": "shell",
-      "environment_vars": [
-        "DEPLOY_USER={{user `deploy_user`}}",
-        "DEPLOY_PASS={{user `deploy_pass`}}"
-      ],
       "scripts": [
         "scripts/install_deps.sh",
-        "scripts/build_wrf.sh",
-        "scripts/add_augury.sh"
+        "scripts/build_wrf.sh"
       ]
     }
   ],
@@ -32,12 +25,12 @@
     [
       {
         "type": "docker-tag",
-        "repository": "augury/{{user `name_prefix`}}",
+        "repository": "wrf/{{user `name_prefix`}}",
         "tag": "{{user `git_sha`}}"
       },
       {
         "type": "docker-tag",
-        "repository": "augury/{{user `name_prefix`}}",
+        "repository": "wrf/{{user `name_prefix`}}",
         "tag": "latest"
       }
     ]

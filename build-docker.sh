@@ -7,7 +7,7 @@ if [ "$#" -ne 0 ]; then
 fi
 
 echo "Building the latest version of the docker image"
-docker build . -t augury-image-base:latest
+docker build . -t wrf-image-base:latest
 
 if [ -v CI_COMMIT_SHA ]; then
     GIT_SHA=${CI_COMMIT_SHA}
