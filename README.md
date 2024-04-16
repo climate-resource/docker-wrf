@@ -3,6 +3,16 @@
 Build immutable images for running WRF.
 
 
+## Requirements
+
+[Packer](https://www.packer.io/) is used to build the images. Packer is a tool for creating machine and 
+container images for multiple platforms from a single source configuration.
+
+Packer version 1.7.0 or later is required to support the new `pkr.hcl` format.
+
+[Packer installation docs](https://developer.hashicorp.com/packer/install?product_intent=packer)
+
+
 ### Getting Started
 
 Once the secrets have been created, deploying a new image to EC2 is as simple as running:
