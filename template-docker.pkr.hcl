@@ -12,6 +12,16 @@ variable "platform" {
   default = "linux/amd64"
 }
 
+variable "wrf_version" {
+  type    = string
+  default = "4.1.2"
+}
+
+variable "wps_version" {
+  type    = string
+  default = "4.1"
+}
+
 variable "git_sha" {
   type    = string
   default = "none"
@@ -19,14 +29,14 @@ variable "git_sha" {
 
 variable "name_prefix" {
   type    = string
-  default = "wrf-standalone"
+  default = "ghcr.io/climate-resource"
 }
 
 source "docker" "wrf-base" {
   commit  = true
   discard = false
   platform = "${var.platform}"
-  image   = "wrf-image-base:latest"
+  image   = "${name_prefix}/wrf-base:latest"
   pull    = false
 }
 
@@ -39,15 +49,16 @@ build {
       "scripts/build_wrf.sh"
     ]
     environment_vars = [
-        "PLATFORM=${var.platform}"
+        "PLATFORM=${var.platform}",
+        "WRF_VERSION=${var.wrf_version}",
+        "WPS_VERSION=${var.wps_version}",
     ]
   }
 
   post-processors {
     post-processor "docker-tag" {
-
-      repository = "${var.name_prefix}"
-      tag        = ["${var.git_sha}", "latest"]
+      repository = "${name_prefix}/wrf"
+      tag        = ["${var.git_sha}", "latest", "${var.wrf_version}"]
     }
   }
 }

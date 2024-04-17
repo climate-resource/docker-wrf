@@ -4,26 +4,26 @@
 set -x
 
 # Setup
-WRF_VERSION=4.1.2
-WPS_VERSION=4.1
+WRF_VERSION="${WRF_VERSION:-4.1.2}"
+WPS_VERSION="${WPS_VERSION:-4.1}"
 DIR=/opt/wrf/libs
 
 # Link to the compiled dependencies
 export PATH=$DIR/bin:$PATH
 export LDFLAGS=-L$DIR/lib
 export CPPFLAGS=-I$DIR/include
-export CC=gcc
-export CXX=g++
-export FC=gfortran
-export FCFLAGS=-m64
-export F77=gfortran
-export FFLAGS=-m64
+export CC=gcc-12
+export CXX=g++-12
+export FC=gfortran-12
+#export FCFLAGS=-m64
+export F77=gfortran-12
+#export FFLAGS=-m64
 export NETCDF=$DIR
 export NETCDF4=1
 export HDF5=$DIR
 export JASPERLIB=$DIR/lib
 export JASPERINC=$DIR/include
-export J="-j 4"
+export J="-j 8"
 
 pushd $DIR/..
 

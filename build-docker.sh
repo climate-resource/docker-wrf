@@ -12,7 +12,7 @@ fi
 PLATFORM="${PLATFORM:-linux/amd64}"
 
 echo "Building the latest version of the docker image"
-docker build --platform $PLATFORM . -t wrf-image-base:latest
+docker build --platform $PLATFORM . -t ghcr.io/climate-resource/wrf-base:latest
 
 if [ -v CI_COMMIT_SHA ]; then
     GIT_SHA=${CI_COMMIT_SHA}
