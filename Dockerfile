@@ -8,7 +8,7 @@ RUN apt-get update && \
 
 FROM base as build
 
-ARG PLATFORM=linux/amd64
+ARG TARGETPLATFORM
 ENV WRF_VERSION=4.2
 ENV WPS_VERSION=4.2
 
@@ -17,7 +17,7 @@ COPY scripts /opt/wrf/build/scripts/
 
 WORKDIR /opt/wrf
 
-RUN bash /opt/wrf/build/scripts/install_deps.sh
-RUN bash /opt/wrf/build/scripts/build_wrf.sh
+RUN PLATFORM=${TARGETPLATFORM} bash /opt/wrf/build/scripts/install_deps.sh
+RUN PLATFORM=${TARGETPLATFORM} bash /opt/wrf/build/scripts/build_wrf.sh
 
 ENTRYPOINT ["/bin/bash"]
