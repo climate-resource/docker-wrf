@@ -3,7 +3,7 @@ FROM ubuntu:22.04 as base
 MAINTAINER Jared Lewis <jared.lewis@climate-resource.com>
 
 RUN apt-get update && \
-    apt-get install -y sudo curl build-essential gfortran m4 csh git jq wget aria2 imagemagick libmpich-dev && \
+    apt-get install -y sudo curl build-essential gfortran m4 csh git jq wget aria2 imagemagick libmpich-dev file && \
     rm -rf /var/lib/apt/lists/*
 
 FROM base as build
