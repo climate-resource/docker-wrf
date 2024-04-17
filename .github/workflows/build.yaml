@@ -18,7 +18,7 @@ jobs:
         os:
           - image: ubuntu-latest
             platform: linux/amd64
-          - image: macos-14-xlarge
+          - image: macos-14
             platform: linux/arm64
     runs-on: ${{ matrix.os.image }}
 
