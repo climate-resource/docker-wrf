@@ -3,26 +3,23 @@
 set -x
 set -e
 
-sudo apt update && sudo apt -y upgrade
-sudo apt install -y build-essential gfortran m4 csh git jq wget aria2 imagemagick curl
-
-
 # Set up the required ENV variables
 # The current configuration uses GNU compilers
 export DIR=/opt/wrf/libs
-export CC=gcc
-export CXX=g++
-export FC=gfortran
-export FCFLAGS=-m64
-export F77=gfortran
-export FFLAGS=-m64
-export NC_VERSION=4.7.0
-export NC_FORTRAN_VERSION=4.4.5
-MPICH_VERSION=3.2
+export CC=gcc-12
+export CXX=g++-12
+export FC=gfortran-12
+#export FCFLAGS=-m64
+export F77=gfortran-12
+#export FFLAGS=-m64
+export NC_VERSION=4.9.2
+export NC_FORTRAN_VERSION=4.6.1
+MPICH_VERSION=4.0
 ZLIB_VERSION=1.3.1
 LIBPNG_VERSION=1.6.34
 LIBCURL_VERSION=7.65.3
 JASPER_VERSION=1.900.1
+HDF5_VERSION=1.10.5
 NUM_CORES=8
 
 
@@ -96,28 +93,35 @@ if [ ! -f $DIR/lib/libjasper.a ]; then
   wget -nv -N http://www2.mmm.ucar.edu/wrf/OnLineTutorial/compile_tutorial/tar_files/jasper-$JASPER_VERSION.tar.gz
   tar xzvf jasper-$JASPER_VERSION.tar.gz     #or just .tar if no .gz present
   pushd jasper-$JASPER_VERSION
-  ./configure --prefix=$DIR
+
+  if [ "$PLATFORM" = "linux/arm64" ]; then
+      EXTRA_ARGS="--build=aarch64-unknown-linux-gnu"
+  else
+      EXTRA_ARGS=""
+  fi
+  ./configure --prefix=$DIR $EXTRA_ARGS
   make -j $NUM_CORES
   make install
   popd
 fi
 
-# Install MPICH
-if [ ! -f $DIR/lib/libmpi.a ]; then
-  wget -nv -N http://www.mpich.org/static/downloads/$MPICH_VERSION/mpich-$MPICH_VERSION.tar.gz
-  tar xzvf mpich-$MPICH_VERSION.tar.gz
-  pushd mpich-$MPICH_VERSION
-  ./configure --prefix=$DIR
-  make -j $NUM_CORES
-  make install
-  popd
-fi
+## Install MPICH
+# Ignoring compiling MPICH for now as we are only targetting a single node
+#if [ ! -f $DIR/lib/libmpi.a ]; then
+#  wget -nv -N http://www.mpich.org/static/downloads/$MPICH_VERSION/mpich-$MPICH_VERSION.tar.gz
+#  tar xzvf mpich-$MPICH_VERSION.tar.gz
+#  pushd mpich-$MPICH_VERSION
+#  ./configure --prefix=$DIR --build=aarch64-unknown-linux-gnu
+#  make -j $NUM_CORES
+#  make install
+#  popd
+#fi
 
 #Install libhdf5
 if [ ! -f $DIR/lib/libhdf5.a ]; then
-  wget -nv -N https://support.hdfgroup.org/ftp/HDF5/current/src/hdf5-1.10.5.tar.gz
-  tar xzvf hdf5-1.10.5.tar.gz
-  pushd hdf5-1.10.5
+  wget -nv -N https://support.hdfgroup.org/ftp/HDF5/current/src/hdf5-$HDF5_VERSION.tar.gz
+  tar xzvf hdf5-$HDF5_VERSION.tar.gz
+  pushd hdf5-$HDF5_VERSION
   ./configure --prefix=$DIR --enable-fortran
   make -j $NUM_CORES
   make install

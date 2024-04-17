@@ -7,6 +7,11 @@ packer {
   }
 }
 
+variable "platform" {
+  type    = string
+  default = "linux/amd64"
+}
+
 variable "git_sha" {
   type    = string
   default = "none"
@@ -20,6 +25,7 @@ variable "name_prefix" {
 source "docker" "wrf-base" {
   commit  = true
   discard = false
+  platform = "${var.platform}"
   image   = "wrf-image-base:latest"
   pull    = false
 }
@@ -31,6 +37,9 @@ build {
     scripts = [
       "scripts/install_deps.sh",
       "scripts/build_wrf.sh"
+    ]
+    environment_vars = [
+        "PLATFORM=${var.platform}"
     ]
   }
 
