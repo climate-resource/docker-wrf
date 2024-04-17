@@ -94,7 +94,11 @@ build {
   }
 
   provisioner "shell" {
-    scripts = ["scripts/install_deps.sh", "scripts/build_wrf.sh"]
+    scripts = [
+      "scripts/install_system_deps.sh",
+      "scripts/install_deps.sh",
+      "scripts/build_wrf.sh"
+    ]
   }
 
 }

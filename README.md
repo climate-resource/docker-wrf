@@ -5,15 +5,18 @@ Build immutable images for running WRF.
 
 ## Requirements
 
-[Packer](https://www.packer.io/) is used to build the images. Packer is a tool for creating machine and 
-container images for multiple platforms from a single source configuration.
-
+If you need to build AWS AMI images, [Packer](https://www.packer.io/) is required. 
+Packer is a tool for creating machine and container images for multiple platforms
+from a single source configuration.
 Packer version 1.7.0 or later is required to support the new `pkr.hcl` format.
 
 [Packer installation docs](https://developer.hashicorp.com/packer/install?product_intent=packer)
 
+If a docker image is required, then [Docker](https://www.docker.com/) is required.
 
 ### Getting Started
+
+> Note: The following instructions are for building the image in AWS. These steps have not been tested in a long time.
 
 Once the secrets have been created, deploying a new image to EC2 is as simple as running:
     
@@ -38,12 +41,18 @@ There are a number of secrets that are needed to build the application, especial
     
 ### Local development
 
-To make it simple to test out changes locally, the `docker` builder can be used. This builder uses the `wrf-image-base` docker image which
-includes some additional changes to make it similar to the base image used on AWS. To create a new local image run:
+For local testing, the docker image can be used to build the WRF image. 
+This is a good way to test changes to the scripts. 
 
-    ./build-docker.sh
-    
-This script also automatically builds the `wrf-image-base` docker image when needed.
+To build the docker image, run the following command:
 
-These scripts can also be used to install wrf to the local machine by running the `install_deps.sh` and then `build_wrf.sh` scripts
-from the `scripts/` folder. Ensure that the /opt/wrf directory exists and you have permission to write to it.
+```
+    docker build . -t wrf
+```
+
+If building on a Arm-based Mac, the following command should be used to target the correct platform.
+Otherwise, the build will emulate the amd64 platform and take much longer.
+
+```
+    docker build --build_arg PLATFORM=linux/arm64 . -t wrf
+```
