@@ -1,4 +1,4 @@
-FROM ubuntu:22.04 as base
+FROM ubuntu:20.04 as base
 
 MAINTAINER Jared Lewis <jared.lewis@climate-resource.com>
 
