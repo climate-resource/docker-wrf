@@ -55,12 +55,14 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@5
+        uses: docker/metadata-action@v5
         with:
           images: "${{ env.REGISTRY }}/climate-resource/wrf-base"
-      - name: Build and push
+      - name: Build and push base image
         uses: docker/build-push-action@v5
         with:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+      - name: Run packer
+        run: "bash ./build-docker.sh"

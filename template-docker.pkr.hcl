@@ -36,7 +36,7 @@ source "docker" "wrf-base" {
   commit  = true
   discard = false
   platform = "${var.platform}"
-  image   = "${name_prefix}/wrf-base:latest"
+  image   = "${var.name_prefix}/wrf-base:latest"
   pull    = false
 }
 
@@ -57,7 +57,7 @@ build {
 
   post-processors {
     post-processor "docker-tag" {
-      repository = "${name_prefix}/wrf"
+      repository = "${var.name_prefix}/wrf"
       tag        = ["${var.git_sha}", "latest", "${var.wrf_version}"]
     }
   }
