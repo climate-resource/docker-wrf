@@ -30,7 +30,7 @@ pushd $DIR/..
 
 # Build WRF
 if [ ! -f WRF-${WRF_VERSION}/run/real.exe ]; then
-  wget -nv https://github.com/wrf-model/WRF/archive/v${WRF_VERSION}.tar.gz -O WRF-v${WRF_VERSION}.tar.gz
+  wget -nv https://github.com/wrf-model/WRF/releases/download/v${WRF_VERSION}/v${WRF_VERSION}.tar.gz -O WRF-v${WRF_VERSION}.tar.gz
   tar -xzvf WRF-v${WRF_VERSION}.tar.gz
   pushd WRF-${WRF_VERSION} || exit
   echo "34\n1\n" | ./configure

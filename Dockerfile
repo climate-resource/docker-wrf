@@ -9,7 +9,7 @@ RUN apt-get update && \
 FROM base as build
 
 ARG TARGETPLATFORM
-ENV WRF_VERSION=4.5.1
+ENV WRF_VERSION=4.5.2
 ENV WPS_VERSION=4.5
 
 
