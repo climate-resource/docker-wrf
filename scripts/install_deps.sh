@@ -6,11 +6,11 @@ set -e
 # Set up the required ENV variables
 # The current configuration uses GNU compilers
 export DIR=/opt/wrf/libs
-export CC=gcc-12
-export CXX=g++-12
-export FC=gfortran-12
+export CC=gcc
+export CXX=g++
+export FC=gfortran
 #export FCFLAGS=-m64
-export F77=gfortran-12
+export F77=gfortran
 #export FFLAGS=-m64
 export NC_VERSION=4.9.2
 export NC_FORTRAN_VERSION=4.6.1

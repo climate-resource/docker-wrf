@@ -2,6 +2,7 @@
 # Builds WRF and WPS using the prebuilt dependencies
 
 set -x
+set -e
 
 # Setup
 WRF_VERSION="${WRF_VERSION:-4.1.2}"
@@ -12,11 +13,11 @@ DIR=/opt/wrf/libs
 export PATH=$DIR/bin:$PATH
 export LDFLAGS=-L$DIR/lib
 export CPPFLAGS=-I$DIR/include
-export CC=gcc-12
-export CXX=g++-12
-export FC=gfortran-12
+export CC=gcc
+export CXX=g++
+export FC=gfortran
 #export FCFLAGS=-m64
-export F77=gfortran-12
+export F77=gfortran
 #export FFLAGS=-m64
 export NETCDF=$DIR
 export NETCDF4=1
