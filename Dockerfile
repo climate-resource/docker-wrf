@@ -2,6 +2,9 @@ FROM ubuntu:20.04 as base
 
 MAINTAINER Jared Lewis <jared.lewis@climate-resource.com>
 
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=Etc/UTC
+
 RUN apt-get update && \
     apt-get install -y sudo curl build-essential gfortran m4 csh git jq wget aria2 imagemagick libmpich-dev file && \
     rm -rf /var/lib/apt/lists/*
