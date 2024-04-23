@@ -35,7 +35,6 @@ if [ ! -f WRF-${WRF_VERSION}/run/real.exe ]; then
   pushd WRFV${WRF_VERSION} || exit
   echo "34\n1\n" | ./configure
   ./compile em_real
-  ls -ls *.exe
   popd
   ln -s WRFV${WRF_VERSION} WRF
 fi
@@ -48,7 +47,6 @@ if [ ! -f WPS-${WPS_VERSION}/wps.exe ]; then
   pushd WPSV${WPS_VERSION} || exit
   echo "1" | ./configure
   ./compile
-  ls -ls *.exe
   popd
   ln -s WPSV${WPS_VERSION} WPS
 fi
