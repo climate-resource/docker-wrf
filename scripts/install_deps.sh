@@ -9,9 +9,9 @@ export DIR=/opt/wrf/libs
 export CC=gcc
 export CXX=g++
 export FC=gfortran
-export FCFLAGS="-m64 -fallow-argument-mismatch"
+export FCFLAGS="-m64"
 export F77=gfortran
-export FFLAGS="-m64 -fallow-argument-mismatch"
+export FFLAGS="-m64"
 export NC_VERSION=4.9.2
 export NC_FORTRAN_VERSION=4.6.1
 MPICH_VERSION=4.0
@@ -19,7 +19,7 @@ ZLIB_VERSION=1.3.1
 LIBPNG_VERSION=1.6.34
 LIBCURL_VERSION=7.65.3
 JASPER_VERSION=1.900.1
-HDF5_VERSION=1.10.5
+HDF5_VERSION=1.10.11
 NUM_CORES=8
 
 
@@ -119,9 +119,9 @@ fi
 
 #Install libhdf5
 if [ ! -f $DIR/lib/libhdf5.a ]; then
-  wget -nv -N https://support.hdfgroup.org/ftp/HDF5/current/src/hdf5-$HDF5_VERSION.tar.gz
-  tar xzvf hdf5-$HDF5_VERSION.tar.gz
-  pushd hdf5-$HDF5_VERSION
+  wget -nv -N https://github.com/HDFGroup/hdf5/releases/download/hdf5-1_10_11/hdf5-1_10_11.tar.gz
+  tar xzvf hdf5-1_10_11.tar.gz
+  pushd hdfsrc
   ./configure --prefix=$DIR --enable-fortran
   make -j $NUM_CORES
   make install
