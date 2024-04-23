@@ -44,11 +44,11 @@ if [ ! -f WPS-${WPS_VERSION}/wps.exe ]; then
   wget -nv https://github.com/wrf-model/WPS/archive/v${WPS_VERSION}.tar.gz -O WPS-v${WPS_VERSION}.tar.gz
   tar -xzvf WPS-v${WPS_VERSION}.tar.gz
 
-  pushd WPSV${WPS_VERSION} || exit
+  pushd WPS-${WPS_VERSION} || exit
   echo "1" | ./configure
   ./compile
   popd
-  ln -s WPSV${WPS_VERSION} WPS
+  ln -s WPS-${WPS_VERSION} WPS
 fi
 
 rm *.tar.gz
