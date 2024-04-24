@@ -12,8 +12,8 @@ RUN apt-get update && \
 FROM base as build
 
 ARG TARGETPLATFORM
-ENV WRF_VERSION=4.5.2
-ENV WPS_VERSION=4.5
+ARG WRF_VERSION=4.5.1
+ARG WPS_VERSION=4.5
 
 
 COPY scripts /opt/wrf/build/scripts/
@@ -21,6 +21,6 @@ COPY scripts /opt/wrf/build/scripts/
 WORKDIR /opt/wrf
 
 RUN PLATFORM=${TARGETPLATFORM} bash /opt/wrf/build/scripts/install_deps.sh
-RUN PLATFORM=${TARGETPLATFORM} bash /opt/wrf/build/scripts/build_wrf.sh
+RUN PLATFORM=${TARGETPLATFORM} WRF_VERSION=${WRF_VERSION} WPS_VERSION=${WPS_VERSION} bash /opt/wrf/build/scripts/build_wrf.sh
 
 ENTRYPOINT ["/bin/bash"]

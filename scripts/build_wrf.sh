@@ -5,8 +5,8 @@ set -x
 set -e
 
 # Setup
-WRF_VERSION="${WRF_VERSION:-4.1.2}"
-WPS_VERSION="${WPS_VERSION:-4.1}"
+WRF_VERSION="${WRF_VERSION:-4.5.1}"
+WPS_VERSION="${WPS_VERSION:-4.5}"
 DIR=/opt/wrf/libs
 
 # Link to the compiled dependencies

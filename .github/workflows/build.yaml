@@ -27,7 +27,8 @@ jobs:
     env:
       REGISTRY: ghcr.io
       IMAGE: ghcr.io/climate-resource/wrf
-      WRF_VERSION: 4.2
+      WRF_VERSION: 4.5.1
+      WPS_VERSION: 4.5
 
     steps:
       - name: Prepare
@@ -58,6 +59,10 @@ jobs:
         uses: docker/build-push-action@v5
         id: build
         with:
+          build-args: |
+            WRF_VERSION=${{ env.WRF_VERSION }}
+            WPS_VERSION=${{ env.WPS_VERSION }}
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
           tags: ${{ steps.meta.outputs.tags }}
+          push: true
