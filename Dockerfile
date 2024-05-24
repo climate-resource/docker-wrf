@@ -6,7 +6,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Etc/UTC
 
 RUN apt-get update && \
-    apt-get install -y sudo curl build-essential gfortran m4 csh git jq wget aria2 imagemagick libmpich-dev file && \
+    apt-get install -y sudo curl build-essential gfortran m4 csh git jq wget aria2 imagemagick libmpich-dev file libnetcdff-dev && \
     rm -rf /var/lib/apt/lists/*
 
 FROM base as build

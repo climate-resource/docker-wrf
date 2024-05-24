@@ -117,38 +117,38 @@ fi
 #  popd
 #fi
 
-#Install libhdf5
-if [ ! -f $DIR/lib/libhdf5.a ]; then
-  wget -nv -N https://github.com/HDFGroup/hdf5/releases/download/hdf5-1_10_11/hdf5-1_10_11.tar.gz
-  tar xzvf hdf5-1_10_11.tar.gz
-  pushd hdfsrc
-  ./configure --prefix=$DIR --enable-fortran
-  make -j $NUM_CORES
-  make install
-  popd
-fi
+##Install libhdf5
+#if [ ! -f $DIR/lib/libhdf5.a ]; then
+#  wget -nv -N https://github.com/HDFGroup/hdf5/releases/download/hdf5-1_10_11/hdf5-1_10_11.tar.gz
+#  tar xzvf hdf5-1_10_11.tar.gz
+#  pushd hdfsrc
+#  ./configure --prefix=$DIR --enable-fortran
+#  make -j $NUM_CORES
+#  make install
+#  popd
+#fi
+#
+## Download and install netCDF
+#if [ ! -f $DIR/lib/libnetcdf.a ]; then
+#  wget -nv -N https://github.com/Unidata/netcdf-c/archive/v$NC_VERSION.tar.gz -O netcdf-c-$NC_VERSION.tar.gz
+#  tar xzvf netcdf-c-$NC_VERSION.tar.gz
+#  pushd netcdf-c-$NC_VERSION
+#  ./configure --prefix=$DIR --disable-dap --enable-netcdf4 --disable-libxml2
+#  make -j $NUM_CORES
+#  make install
+#  popd
+#fi
 
-# Download and install netCDF
-if [ ! -f $DIR/lib/libnetcdf.a ]; then
-  wget -nv -N https://github.com/Unidata/netcdf-c/archive/v$NC_VERSION.tar.gz -O netcdf-c-$NC_VERSION.tar.gz
-  tar xzvf netcdf-c-$NC_VERSION.tar.gz
-  pushd netcdf-c-$NC_VERSION
-  ./configure --prefix=$DIR --disable-dap --enable-netcdf4 --disable-libxml2
-  make -j $NUM_CORES
-  make install
-  popd
-fi
-
-# Install netcdf-fortran
-if [ ! -f $DIR/lib/libnetcdff.a ]; then
-  wget -nv -N https://github.com/Unidata/netcdf-fortran/archive/v$NC_FORTRAN_VERSION.tar.gz -O netcdf-fortran-$NC_FORTRAN_VERSION.tar.gz
-  tar xzvf netcdf-fortran-$NC_FORTRAN_VERSION.tar.gz
-  pushd netcdf-fortran-$NC_FORTRAN_VERSION
-  ./configure --prefix=$DIR
-  make -j $NUM_CORES
-  make install
-  popd
-fi
+## Install netcdf-fortran
+#if [ ! -f $DIR/lib/libnetcdff.a ]; then
+#  wget -nv -N https://github.com/Unidata/netcdf-fortran/archive/v$NC_FORTRAN_VERSION.tar.gz -O netcdf-fortran-$NC_FORTRAN_VERSION.tar.gz
+#  tar xzvf netcdf-fortran-$NC_FORTRAN_VERSION.tar.gz
+#  pushd netcdf-fortran-$NC_FORTRAN_VERSION
+#  ./configure --prefix=$DIR
+#  make -j $NUM_CORES
+#  make install
+#  popd
+#fi
 
 
 rm ./*.tar.gz
