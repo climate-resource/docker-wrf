@@ -52,7 +52,11 @@ if [ ! -f WPS-${WPS_VERSION}/wps.exe ]; then
   tar -xzvf WPS-v${WPS_VERSION}.tar.gz
 
   pushd WPS-${WPS_VERSION} || exit
-  echo "1" | ./configure
+
+  # Add some compiler options for aarch64 (based on x86_64)
+  cat /opt/wrf/build/scripts/configure.aarch64 >> arch/configure.defaults
+
+  echo "1" | ./configure # serial + gfortran
   ./compile
   popd
   ln -s WPS-${WPS_VERSION} WPS

@@ -7,5 +7,6 @@ dependencies:
   - jasper=4.2.4
   - mpich=4.2.1
   - netcdf-fortran=4.6.1
+  - libpng
   - wget
   - gfortran=10.4
