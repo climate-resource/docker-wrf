@@ -6,7 +6,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Etc/UTC
 
 RUN apt-get update && \
-    apt-get install -y curl m4 csh jq file && \
+    apt-get install -y m4 csh jq file build-essential && \
     rm -rf /var/lib/apt/lists/*
 
 COPY environment.yml /opt/environment.yml
