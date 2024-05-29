@@ -34,7 +34,7 @@ if [ ! -f WRF-${WRF_VERSION}/run/real.exe ]; then
   tar -xzvf WRF-v${WRF_VERSION}.tar.gz
   pushd WRFV${WRF_VERSION} || exit
 
-  if (( $ARCH == "aarch64" )); then
+  if [[ $ARCH == "aarch64" ]]; then
     echo "11\n1\n" | ./configure  # dmpar + gfortran + aarch64
   else
     echo "34\n1\n" | ./configure  # dmpar + gfortran + x86_64
