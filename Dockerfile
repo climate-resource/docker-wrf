@@ -26,12 +26,11 @@ RUN conda-pack -n wrf -o /tmp/env.tar && \
 RUN /opt/venv/bin/conda-unpack
 
 COPY scripts /opt/wrf/build/scripts/
-RUN PLATFORM=${TARGETPLATFORM} WRF_VERSION=${WRF_VERSION} WPS_VERSION=${WPS_VERSION} bash /opt/wrf/build/scripts/build_wrf.sh
+RUN WRF_VERSION=${WRF_VERSION} WPS_VERSION=${WPS_VERSION} bash /opt/wrf/build/scripts/build_wrf.sh
 
 
 FROM debian:bookworm AS runtime
 
-ARG TARGETPLATFORM
 ARG WRF_VERSION=4.5.1
 ARG WPS_VERSION=4.5
 

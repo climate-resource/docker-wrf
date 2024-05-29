@@ -26,7 +26,8 @@ export JASPERINC=$DIR/include
 export J="-j 8"
 export ARCH=$(uname -m)
 
-pushd $DIR/..
+# Build directory
+cd /opt/wrf
 
 # Build WRF
 if [ ! -f WRF-${WRF_VERSION}/run/real.exe ]; then
