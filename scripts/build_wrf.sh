@@ -35,9 +35,9 @@ if [ ! -f WRF-${WRF_VERSION}/run/real.exe ]; then
   pushd WRFV${WRF_VERSION} || exit
 
   if (( $ARCH == "aarch64" )); then
-    echo "12\n1\n" | ./configure
+    echo "11\n1\n" | ./configure  # dmpar + gfortran + aarch64
   else
-    echo "34\n1\n" | ./configure
+    echo "34\n1\n" | ./configure  # dmpar + gfortran + x86_64
   fi
 
   ./compile em_real
