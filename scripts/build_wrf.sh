@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
 # Builds WRF and WPS using the prebuilt dependencies
 
-set -x
-set -e
+set -xe
 
 # Setup
 WRF_VERSION="${WRF_VERSION:-4.5.1}"
 WPS_VERSION="${WPS_VERSION:-4.5}"
-DIR=/opt/wrf/libs
+DIR=/opt/venv
 
 # Link to the compiled dependencies
 export PATH=$DIR/bin:$PATH
@@ -21,10 +20,11 @@ export F77=gfortran
 export FFLAGS="-m64  -fallow-argument-mismatch"
 export NETCDF=$(nc-config --prefix)
 export NETCDF4=1
-#export HDF5=$DIR
+export HDF5=$DIR
 export JASPERLIB=$DIR/lib
 export JASPERINC=$DIR/include
 export J="-j 8"
+export ARCH=$(uname -m)
 
 pushd $DIR/..
 
@@ -33,7 +33,13 @@ if [ ! -f WRF-${WRF_VERSION}/run/real.exe ]; then
   wget -nv https://github.com/wrf-model/WRF/releases/download/v${WRF_VERSION}/v${WRF_VERSION}.tar.gz -O WRF-v${WRF_VERSION}.tar.gz
   tar -xzvf WRF-v${WRF_VERSION}.tar.gz
   pushd WRFV${WRF_VERSION} || exit
-  echo "34\n1\n" | ./configure
+
+  if (( $ARCH == "aarch64" )); then
+    echo "12\n1\n" | ./configure
+  else
+    echo "34\n1\n" | ./configure
+  fi
+
   ./compile em_real
   popd
   ln -s WRFV${WRF_VERSION} WRF
