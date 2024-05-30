@@ -1,7 +1,5 @@
 FROM continuumio/miniconda3 as build
 
-MAINTAINER Jared Lewis <jared.lewis@climate-resource.com>
-
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Etc/UTC
 
@@ -30,6 +28,8 @@ RUN WRF_VERSION=${WRF_VERSION} WPS_VERSION=${WPS_VERSION} bash /opt/wrf/build/sc
 
 
 FROM debian:bookworm AS runtime
+
+MAINTAINER Jared Lewis <jared.lewis@climate-resource.com>
 
 ARG WRF_VERSION=4.5.1
 ARG WPS_VERSION=4.5
