@@ -15,9 +15,9 @@ export CPPFLAGS=-I$DIR/include
 export CC=gcc
 export CXX=g++
 export FC=gfortran
-export FCFLAGS="-m64  -fallow-argument-mismatch"
+export FCFLAGS="-m64  -fallow-argument-mismatch $(nf-config --flibs)"
 export F77=gfortran
-export FFLAGS="-m64  -fallow-argument-mismatch"
+export FFLAGS="-m64  -fallow-argument-mismatch $(nf-config --flibs)"
 export NETCDF=$(nc-config --prefix)
 export NETCDF4=1
 export HDF5=$DIR
@@ -64,3 +64,8 @@ fi
 
 rm *.tar.gz
 
+[[ -f /opt/wrf/WRF/main/real.exe ]] || { echo "WRF real.exe failed to build"; exit 1; }
+[[ -f /opt/wrf/WRF/main/wrf.exe ]] || { echo "WRF wrf.exe failed to build"; exit 1; }
+[[ -f /opt/wrf/WPS/metgrid.exe ]] || { echo "WPS metgrid.exe failed to build"; exit 1; }
+[[ -f /opt/wrf/WPS/geogrid.exe ]] || { echo "WPS geogrid.exe failed to build"; exit 1; }
+[[ -f /opt/wrf/WPS/ungrib.exe ]] || { echo "WPS ungrib.exe failed to build"; exit 1; }
