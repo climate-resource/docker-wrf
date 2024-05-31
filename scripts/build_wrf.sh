@@ -10,7 +10,7 @@ DIR=/opt/venv
 
 # Link to the compiled dependencies
 export PATH=$DIR/bin:$PATH
-export LDFLAGS=-L$DIR/lib
+export LDFLAGS="-L$DIR/lib $(nf-config --flibs)"
 export CPPFLAGS=-I$DIR/include
 export CC=gcc
 export CXX=g++
