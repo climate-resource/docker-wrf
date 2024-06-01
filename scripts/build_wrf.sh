@@ -15,9 +15,9 @@ export CPPFLAGS=-I$DIR/include
 export CC=gcc
 export CXX=g++
 export FC=gfortran
-export FCFLAGS="-m64  -fallow-argument-mismatch $(nf-config --flibs)"
+export FCFLAGS="-m64  -fallow-argument-mismatch"
 export F77=gfortran
-export FFLAGS="-m64  -fallow-argument-mismatch $(nf-config --flibs)"
+export FFLAGS="-m64  -fallow-argument-mismatch"
 export NETCDF=$(nc-config --prefix)
 export NETCDF4=1
 export HDF5=$DIR
@@ -32,7 +32,7 @@ cd /opt/wrf
 # Build WRF
 if [ ! -f WRF-${WRF_VERSION}/run/real.exe ]; then
   wget -nv https://github.com/wrf-model/WRF/releases/download/v${WRF_VERSION}/v${WRF_VERSION}.tar.gz -O WRF-v${WRF_VERSION}.tar.gz
-  tar -xzvf WRF-v${WRF_VERSION}.tar.gz
+  tar -xzf WRF-v${WRF_VERSION}.tar.gz
   pushd WRFV${WRF_VERSION} || exit
 
   if [[ $ARCH == "aarch64" ]]; then
@@ -49,12 +49,15 @@ fi
 # Build WPS
 if [ ! -f WPS-${WPS_VERSION}/wps.exe ]; then
   wget -nv https://github.com/wrf-model/WPS/archive/v${WPS_VERSION}.tar.gz -O WPS-v${WPS_VERSION}.tar.gz
-  tar -xzvf WPS-v${WPS_VERSION}.tar.gz
+  tar -xzf WPS-v${WPS_VERSION}.tar.gz
 
   pushd WPS-${WPS_VERSION} || exit
 
   # Add some compiler options for aarch64 (based on x86_64)
   cat /opt/wrf/build/scripts/configure.aarch64 >> arch/configure.defaults
+
+  # Fix the netcdf library path. Conda only provides shared libraries
+  sed -i 's/lib\/libnetcdff\.a/lib\/libnetcdff\.so/g' configure
 
   echo "1" | ./configure # serial + gfortran
   ./compile
